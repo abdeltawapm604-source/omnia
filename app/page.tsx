@@ -11,20 +11,25 @@ import ArtIntro from "@/components/ArtIntro";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
-  const [isMounted, setIsMounted] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-  }, []);
+    // نضمن إن الكود شغال في المتصفح 100%
+    setMounted(true);
+    
+    // لو حابب تتأكد إنها شغالة، افتح الـ Console في المتصفح
+    console.log("App Mounted - Intro Status:", isLoading);
+  }, [isLoading]);
 
-  // منع مشاكل الـ Hydration لضمان ظهور المحتوى فورًا على الموبايل
-  if (!isMounted) return <div className="bg-[#F7F5F0] min-h-screen" />;
+  // لو لسه السيرفر بيحمل، م تظهرش حاجة عشان م يحصلش Flicker
+  if (!mounted) return null;
 
   return (
     <main className="min-h-screen relative">
       {isLoading ? (
         <ArtIntro onComplete={() => setIsLoading(false)} />
       ) : (
-        <div className="animate-[siteFadeIn_1.2s_ease-in-out_forwards]">
+        <div className="animate-in fade-in duration-1000">
           <Navbar />
           <Hero />
           <Features />
@@ -33,13 +38,6 @@ export default function Home() {
           <Footer />
         </div>
       )}
-
-      <style dangerouslySetInnerHTML={{ __html: `
-        @keyframes siteFadeIn {
-          from { opacity: 0; filter: blur(10px); transform: scale(1.02); }
-          to { opacity: 1; filter: blur(0); transform: scale(1); }
-        }
-      `}} />
     </main>
   );
 }
