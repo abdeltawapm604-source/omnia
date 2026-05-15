@@ -34,7 +34,7 @@ export default function Footer() {
               Designed by
             </span>
             <span className="text-[10px] font-serif italic text-charcoal/60 hover:text-charcoal transition-colors cursor-default">
-              Abdelrahman Mohamed
+              Abdeltawap Mohamed
             </span>
           </div>
         </div>
